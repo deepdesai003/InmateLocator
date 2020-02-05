@@ -6,6 +6,8 @@ Take home project for engineering candidates at City of Philadelphia
 
 Your team has been asked by the Philadelphia Department of Prisons to build an app to help locate inmates within the prison system. You are on a team with a front-end developer who mocked up some of the UI (see below), and they need you to build the data API. There are three customers: non-authenticated users searching for their friends and family, wardens who want to keep track of inmates in their locations, and administrators who need to see all inmates in the system. 
 
+![Inmate Locator UI](mock-ui.png)
+
 As you can see in the screen above, the app provides two ways to search for an inmate: By Prisoner ID (PID) or by full name and date of birth. 
 
 Both of these search methods will return an inmate if there is at least one that matches and a 404 if there is not. An inmate looks like: 
