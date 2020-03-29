@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -28,9 +29,10 @@
         /// </summary>
         public DateTime DateOfBirth { get; set; } = default;
 
+        [ForeignKey("Location")]
         /// <summary>
         ///     Gets or sets the PrisonerID on this Inmate.
         /// </summary>
-        public string Location { get; set; } = string.Empty;
+        public int LocationID { get; set; } = 0;
     }
 }
