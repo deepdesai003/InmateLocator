@@ -93,7 +93,7 @@
         ///</remarks>
         /// <response code="404">Inmate not found</response>  
         /// <returns>Inmate Object</returns>
-        [HttpGet("GetInmateByNameAndBirthDate/{firstName}/{lastName}/{dateOfBirth}")]
+        [HttpGet("GetInmateByNameAndBirthDate/{FirstName}/{LastName}/{DateOfBirth}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<Inmate>>> GetInmateByNameAndBirthDate (string firstName, string lastName, DateTime dateOfBirth)
