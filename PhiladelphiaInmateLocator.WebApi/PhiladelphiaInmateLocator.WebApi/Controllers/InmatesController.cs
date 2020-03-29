@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -143,12 +144,18 @@
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<Inmate>> GetInmatesForMyLocation ()
         {
-            string LocationOfUser = User.Claims.Where(claim => claim.Type.Equals("location")).First().Value;
+            string LocationOfUser = string.Empty;
 
+            ClaimsPrincipal currentUser = HttpContext.User;
+
+            if(currentUser.HasClaim(claim => claim.Type.Equals("location")))
+            {
+                LocationOfUser = currentUser.Claims.FirstOrDefault(claim => claim.Type.Equals("location")).Value;
+            }
 
             if(string.IsNullOrEmpty(LocationOfUser))
             {
-                return NotFound();
+                return NotFound("Location not found for the user");
             }
 
             List<Inmate> inmates = _context.Location
