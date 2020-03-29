@@ -29,10 +29,11 @@
         /// </summary>
         public DateTime DateOfBirth { get; set; } = default;
 
-        [ForeignKey("Location")]
+
         /// <summary>
         ///     Gets or sets the PrisonerID on this Inmate.
         /// </summary>
+        [ForeignKey("Location")]
         public int LocationID { get; set; } = 0;
     }
 }
