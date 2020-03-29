@@ -13,5 +13,7 @@
         }
 
         public DbSet<Inmate> Inmates { get; set; }
+
+        public DbSet<Location> Location { get; set; }
     }
 }

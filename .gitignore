@@ -1,0 +1,9 @@
+*.dll
+*.dtbcache
+*.ide~Stashed changes
+*.ide
+*.lock
+PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/bin/*
+*.ide-wal
+PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/obj/
+PhiladelphiaInmateLocator.WebApi/.vs/PhiladelphiaInmateLocator.WebApi/v16/
