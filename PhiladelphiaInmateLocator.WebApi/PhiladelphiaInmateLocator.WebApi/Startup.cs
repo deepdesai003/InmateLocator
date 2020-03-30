@@ -41,11 +41,12 @@ namespace PhiladelphiaInmateLocator.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Inmate Locator", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Description = "JWT Authorization header using the Bearer scheme. <br/> Example Input: \"Bearer {token}\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Scheme = "Bearer",
+                    BearerFormat = "Bearer : {token}",
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -95,12 +96,6 @@ namespace PhiladelphiaInmateLocator.WebApi
                     };
                 });
 
-            /*
-            // Set the comments path for the Swagger JSON and UI.
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            c.IncludeXmlComments(xmlPath);
-            */
             services.AddScoped<IInmateService, InmateService>();
         }
 
@@ -133,6 +128,8 @@ namespace PhiladelphiaInmateLocator.WebApi
             {   
                 endpoints.MapControllers();
             });
+
+            app.UseStatusCodePages();
         }
     }
 }
