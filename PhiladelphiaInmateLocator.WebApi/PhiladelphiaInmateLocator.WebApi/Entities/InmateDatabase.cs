@@ -1,4 +1,4 @@
-﻿namespace PhiladelphiaInmateLocator.WebApi.Services.Services
+﻿namespace PhiladelphiaInmateLocator.WebApi.Entities
 {
     using Microsoft.EntityFrameworkCore;
     using PhiladelphiaInmateLocator.WebApi.Models;
@@ -8,9 +8,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class InmateDatabaseService : DbContext
+    public class InmateDatabase : DbContext
     {
-        public InmateDatabaseService (DbContextOptions<InmateDatabaseService> inmateDatabase) : base(inmateDatabase)
+        public InmateDatabase(DbContextOptions<InmateDatabase> inmateDatabase) : base(inmateDatabase)
         {
         }
 

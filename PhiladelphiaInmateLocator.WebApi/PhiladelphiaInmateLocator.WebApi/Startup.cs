@@ -14,6 +14,7 @@ namespace PhiladelphiaInmateLocator.WebApi
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
+    using PhiladelphiaInmateLocator.WebApi.Entities;
     using PhiladelphiaInmateLocator.WebApi.Models;
     using PhiladelphiaInmateLocator.WebApi.Services.Interface;
     using PhiladelphiaInmateLocator.WebApi.Services.Services;
@@ -31,7 +32,7 @@ namespace PhiladelphiaInmateLocator.WebApi
         public void ConfigureServices (IServiceCollection services)
         {
             
-            services.AddDbContext<InmateDatabaseService>(options => options.UseInMemoryDatabase("Inmate"));
+            services.AddDbContext<InmateDatabase>(options => options.UseInMemoryDatabase("Inmate"));
             
             services.AddControllers();
 
