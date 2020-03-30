@@ -29,11 +29,9 @@
         /// </summary>
         public DateTime DateOfBirth { get; set; } = default;
 
-
         /// <summary>
-        ///     Gets or sets the PrisonerID on this Inmate.
+        ///     Gets or sets the Location on this Inmate.
         /// </summary>
-        [ForeignKey("Location")]
-        public int LocationID { get; set; } = 0;
+        public string Location { get; set; } = string.Empty;
     }
 }

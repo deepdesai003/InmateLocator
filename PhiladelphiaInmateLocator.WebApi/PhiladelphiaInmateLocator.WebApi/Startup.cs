@@ -15,6 +15,8 @@ namespace PhiladelphiaInmateLocator.WebApi
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
     using PhiladelphiaInmateLocator.WebApi.Models;
+    using PhiladelphiaInmateLocator.WebApi.Services.Interface;
+    using PhiladelphiaInmateLocator.WebApi.Services.Services;
 
     public class Startup
     {
@@ -28,7 +30,9 @@ namespace PhiladelphiaInmateLocator.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services)
         {
-            services.AddDbContext<InmateContext>(options => options.UseInMemoryDatabase("Inmate"));
+            
+            services.AddDbContext<InmateDatabaseService>(options => options.UseInMemoryDatabase("Inmate"));
+            
             services.AddControllers();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -37,11 +41,12 @@ namespace PhiladelphiaInmateLocator.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Inmate Locator", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Description = "JWT Authorization header using the Bearer scheme. <br/> Example Input: \"Bearer {token}\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Scheme = "Bearer",
+                    BearerFormat = "Bearer : {token}",
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -60,7 +65,6 @@ namespace PhiladelphiaInmateLocator.WebApi
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -92,12 +96,7 @@ namespace PhiladelphiaInmateLocator.WebApi
                     };
                 });
 
-            /*
-            // Set the comments path for the Swagger JSON and UI.
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            c.IncludeXmlComments(xmlPath);
-            */
+            services.AddScoped<IInmateService, InmateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -111,7 +110,7 @@ namespace PhiladelphiaInmateLocator.WebApi
             app.UseSwagger();
 
             app.UseHttpsRedirection();
-
+            
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(swagger =>
@@ -119,16 +118,18 @@ namespace PhiladelphiaInmateLocator.WebApi
                 swagger.SwaggerEndpoint("/swagger/v1/swagger.json", "Inmate Locator V1");
                 swagger.RoutePrefix = string.Empty;
             });
-
+            
             app.UseRouting();
             
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {   
                 endpoints.MapControllers();
             });
+
+            app.UseStatusCodePages();
         }
     }
 }
