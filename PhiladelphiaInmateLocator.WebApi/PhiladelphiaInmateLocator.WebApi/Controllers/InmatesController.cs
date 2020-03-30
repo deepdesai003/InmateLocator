@@ -36,7 +36,8 @@
         [HttpPost("SetData")]
         [AllowAnonymous]
         [Produces("application/json")]
-        public async Task<ActionResult<List<Inmate>>> SetData ()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<Inmate>>> SetData()
         {
             return await this._inmatesService.SetData();
         }
@@ -54,6 +55,7 @@
         [HttpGet("{id}")]
         [AllowAnonymous]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Inmate>> GetInmate(int id)
         {
@@ -75,7 +77,7 @@
         /// 
         /// Notes:
         /// 
-        /// 1. First Name and Last Name are case sensitive.
+        /// 1. First Name and Last Name values are case insensitive.
         /// 
         /// 2.Birth Must be in [yyyy-MM-dd] or [MM-dd-yyyy], A date picker is recommended.
         /// 
@@ -86,12 +88,13 @@
         [HttpGet("GetInmateByNameAndBirthDate/{FirstName}/{LastName}/{DateOfBirth}")]
         [AllowAnonymous]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<Inmate>>> GetInmateByNameAndBirthDate (string firstName, string lastName, DateTime dateOfBirth)
+        public async Task<ActionResult<Inmate>> GetInmateByNameAndBirthDate(string firstName, string lastName, DateTime dateOfBirth)
         {
-            List<Inmate> inmates = await _inmatesService.GetInmateByNameAndBirthDate(firstName, lastName, dateOfBirth);
+            Inmate inmates = await _inmatesService.GetInmateByNameAndBirthDate(firstName, lastName, dateOfBirth).ConfigureAwait(false);
 
-            if(inmates == null && !inmates.Any())
+            if(inmates == null)
             {
                 return NotFound("No Inamte found with this combination of First Name, Last Name and Birth Date.");
             }
@@ -112,8 +115,9 @@
         [HttpGet("GetAllInmates")]
         [Authorize(Roles = "Administrator")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<List<Inmate>>> GetAllInmates ()
+        public async Task<ActionResult<List<Inmate>>> GetAllInmates()
         {
             return await _inmatesService.GetAllInmates().ConfigureAwait(false);
         }
@@ -132,9 +136,9 @@
         [HttpGet("GetInmatesForMyLocation")]
         [Authorize(Roles = "warden")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult<List<Inmate>> GetInmatesForMyLocation ()
+        public async Task<ActionResult<List<Inmate>>> GetInmatesForMyLocation()
         {
             string LocationOfUser = string.Empty;
 
@@ -150,7 +154,7 @@
                 return NotFound("Location not found for the user");
             }
 
-            return this._inmatesService.GetInmatesForMyLocation(Location: LocationOfUser);
+            return await this._inmatesService.GetInmatesForMyLocation(Location: LocationOfUser);
         }
     }
 }

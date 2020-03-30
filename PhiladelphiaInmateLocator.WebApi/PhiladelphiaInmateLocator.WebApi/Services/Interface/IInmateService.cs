@@ -8,14 +8,18 @@
 
     public interface IInmateService
     {
-        Task<List<Inmate>> SetData ();
+        Task ClearData();
 
-        Task<Inmate> GetInmateByID (int id);
+        Task SetInmates();
 
-        Task<List<Inmate>> GetInmateByNameAndBirthDate (string firstName, string lastName, DateTime dateOfBirth);
+        Task<List<Inmate>> SetData();
 
-        Task<List<Inmate>> GetAllInmates ();
+        Task<Inmate> GetInmateByID(int id);
 
-        List<Inmate> GetInmatesForMyLocation (string Location);
+        Task<Inmate> GetInmateByNameAndBirthDate(string firstName, string lastName, DateTime dateOfBirth);
+
+        Task<List<Inmate>> GetAllInmates();
+
+        Task<List<Inmate>> GetInmatesForMyLocation(string Location);
     }
 }
