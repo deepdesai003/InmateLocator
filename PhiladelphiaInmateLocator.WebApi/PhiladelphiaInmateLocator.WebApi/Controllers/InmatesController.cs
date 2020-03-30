@@ -35,6 +35,7 @@
         ///<returns>A List of newly created inmates </returns>
         [HttpPost("SetData")]
         [AllowAnonymous]
+        [Produces("application/json")]
         public async Task<ActionResult<List<Inmate>>> SetData ()
         {
             return await this._inmatesService.SetData();
@@ -52,6 +53,7 @@
         /// <returns>Inmate Object</returns>
         [HttpGet("{id}")]
         [AllowAnonymous]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Inmate>> GetInmate(int id)
         {
@@ -83,6 +85,7 @@
         /// <returns>Inmate Object</returns>
         [HttpGet("GetInmateByNameAndBirthDate/{FirstName}/{LastName}/{DateOfBirth}")]
         [AllowAnonymous]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<Inmate>>> GetInmateByNameAndBirthDate (string firstName, string lastName, DateTime dateOfBirth)
         {
@@ -108,6 +111,7 @@
         /// <returns>A list of Inmates</returns>
         [HttpGet("GetAllInmates")]
         [Authorize(Roles = "Administrator")]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<List<Inmate>>> GetAllInmates ()
         {
@@ -127,6 +131,7 @@
         /// <returns>Returns list of inamtes</returns>
         [HttpGet("GetInmatesForMyLocation")]
         [Authorize(Roles = "warden")]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<Inmate>> GetInmatesForMyLocation ()
