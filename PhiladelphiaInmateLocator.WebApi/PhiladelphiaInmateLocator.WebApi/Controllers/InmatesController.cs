@@ -10,17 +10,18 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using PhiladelphiaInmateLocator.WebApi.Models;
+    using PhiladelphiaInmateLocator.WebApi.Services.Interface;
 
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class InmatesController : ControllerBase
+    public class InmatesController : Controller
     {
-        private readonly InmateContext _context;
+        private readonly IInmateService _inmatesService;
 
-        public InmatesController(InmateContext context)
+        public InmatesController(IInmateService inmatesService)
         {
-            _context = context;
+            this._inmatesService = inmatesService;
         }
 
         ///<summary>
@@ -36,21 +37,8 @@
         [AllowAnonymous]
         public async Task<ActionResult<List<Inmate>>> SetData ()
         {
-            _context.Inmates.Add(new Inmate { Id = 420, FirstName = "John", LastName = "Doe", DateOfBirth = new DateTime(1989, 01, 01), LocationID = 1 });
-            _context.Inmates.Add(new Inmate { Id = 421, FirstName = "Jane", LastName = "Doe", DateOfBirth = new DateTime(1971, 05, 12), LocationID = 1 });
-            _context.Inmates.Add(new Inmate { Id = 422, FirstName = "Julia", LastName = "Roberts", DateOfBirth = new DateTime(1972, 06, 10), LocationID = 1 });
-            _context.Inmates.Add(new Inmate { Id = 423, FirstName = "Bill", LastName = "Cosby", DateOfBirth = new DateTime(1965, 10, 10), LocationID = 2 });
-            _context.Inmates.Add(new Inmate { Id = 424, FirstName = "Matthew", LastName = "Wade", DateOfBirth = new DateTime(1993, 12, 20), LocationID = 3 });
-            _context.Inmates.Add(new Inmate { Id = 425, FirstName = "Michael", LastName = "Clarke", DateOfBirth = new DateTime(1988, 11, 20), LocationID = 3 });
-            _context.Inmates.Add(new Inmate { Id = 426, FirstName = "Jack", LastName = "Reacher", DateOfBirth = new DateTime(1991, 12, 30), LocationID = 3 });
-            _context.Location.Add(new Location { Id = 1, Name = "City Hall" });
-            _context.Location.Add(new Location { Id = 2, Name = "South Prison" });
-            _context.Location.Add(new Location { Id = 3, Name = "Alcatraz" });
-            await _context.SaveChangesAsync();
-
-            return await _context.Inmates.ToListAsync();
+            return await this._inmatesService.SetData();
         }
-
 
         /// <summary>
         /// Get the Inmate for this ID.
@@ -67,7 +55,7 @@
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Inmate>> GetInmate(int id)
         {
-            var inmate = await _context.Inmates.FindAsync(id);
+            var inmate = await this._inmatesService.GetInmateByID(id);
 
             if (inmate == null)
             {
@@ -98,8 +86,7 @@
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<Inmate>>> GetInmateByNameAndBirthDate (string firstName, string lastName, DateTime dateOfBirth)
         {
-            List<Inmate> inmates = await _context.Inmates
-                .Where(inmate => inmate.FirstName.Equals(firstName) && inmate.LastName.Equals(lastName) && inmate.DateOfBirth.Equals(dateOfBirth)).ToListAsync();
+            List<Inmate> inmates = await _inmatesService.GetInmateByNameAndBirthDate(firstName, lastName, dateOfBirth);
 
             if(inmates == null && !inmates.Any())
             {
@@ -122,9 +109,9 @@
         [HttpGet("GetAllInmates")]
         [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<IEnumerable<Inmate>>> GetAllInmates ()
+        public async Task<ActionResult<List<Inmate>>> GetAllInmates ()
         {
-            return await _context.Inmates.ToListAsync();
+            return await _inmatesService.GetAllInmates().ConfigureAwait(false);
         }
 
 
@@ -158,14 +145,7 @@
                 return NotFound("Location not found for the user");
             }
 
-            List<Inmate> inmates = _context.Location
-                .Where(loc => loc.Name.Equals(LocationOfUser))
-                .Join(_context.Inmates,
-                loc => new { Id = loc.Id },
-                inmate => new { Id = inmate.LocationID },
-                (loc, inmate) => inmate).ToList();
-
-            return inmates;
+            return this._inmatesService.GetInmatesForMyLocation(Location: LocationOfUser);
         }
     }
 }
