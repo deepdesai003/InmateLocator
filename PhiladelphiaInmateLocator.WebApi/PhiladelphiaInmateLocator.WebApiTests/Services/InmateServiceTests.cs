@@ -44,6 +44,9 @@
                     };
 
         #region"GetInmateByIDTest"
+        ///<summary>
+        ///Check GetInmateByID returns right response. 
+        ///</summary>
         [Theory]
         [InlineData(40, "TestInmate")]
         [InlineData(10, "Test1")]
@@ -59,6 +62,9 @@
 
 
         #region"GetInmateByNameAndBirthDateTests"
+        ///<summary>
+        ///Check GetInmateByNameAndBirthDate returns right response. 
+        ///</summary>
         [Theory]
         [MemberData(nameof(mockForSerachbyName))]
         public async Task GetInmateByNameAndBirthDateTest(string inputFirstName, string inputLastName, DateTime inputDateOfBirth, int expectedReturnID)
@@ -72,6 +78,9 @@
         #endregion"GetInmateByNameAndBirthDateTests"
 
         #region"GetAllInmatesTests"
+        ///<summary>
+        ///Check GetAllInmates returns right count. 
+        ///</summary>
         [Fact]
         public async Task GetAllInmatesTest()
         {
@@ -82,6 +91,9 @@
             Assert.Equal(4, inmates.Count);
         }
 
+        ///<summary>
+        ///Check GetAllInmates returns empty list when there are no records. 
+        ///</summary>
         [Fact]
         public async Task GetAllInmates_ReturnsEmptyTest()
         {
@@ -95,6 +107,9 @@
 
 
         #region"GetInmatesForMyLocationTests"
+        ///<summary>
+        ///Check GetInmatesByLocation returns right locations. 
+        ///</summary>
         [Theory]
         [InlineData("Location1", 3)]
         [InlineData("Test Jail", 1)]
@@ -106,7 +121,10 @@
             List<Inmate> inmates = await inmateService.GetInmatesByLocation(inputLocation).ConfigureAwait(false);
             Assert.Equal(expectedCount, inmates.Count);
         }
-        
+
+        ///<summary>
+        ///Check GetInmatesByLocation returns empty list if location passed in empty string or null. 
+        ///</summary>
         [Theory]
         [InlineData(null)]
         [InlineData("")]
@@ -122,6 +140,10 @@
         #endregion"GetInmatesForMyLocationTests"
 
         #region"Helper"
+        /// <summary>
+        /// Helper to mock inmate database
+        /// </summary>
+        /// <param name="onlyClearData">Clears out all records if ture.</param>
         internal async Task<InmateDatabase> GetInmateDatabase(bool onlyClearData = false)
         {
             var options = new DbContextOptionsBuilder<InmateDatabase>()

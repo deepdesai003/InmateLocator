@@ -65,7 +65,7 @@
             InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
 
             //Call the Api/Controller
-            ActionResult<Inmate> result = await controllerResponse.GetInmateByID(10).ConfigureAwait(false);
+            ActionResult<Inmate> result = await controllerResponse.GetInmateByID(100).ConfigureAwait(false);
 
             //Verify the object response type
             Assert.IsType<ActionResult<Inmate>>(result);
