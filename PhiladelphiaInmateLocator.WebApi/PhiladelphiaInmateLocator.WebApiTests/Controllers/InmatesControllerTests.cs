@@ -12,6 +12,11 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Http;
     using System.Security.Claims;
+    using System.Net;
+    using Microsoft.AspNetCore.TestHost;
+    using System.Net.Http;
+    using Microsoft.AspNetCore.Hosting;
+    using System.Linq;
 
     public class InmatesControllerTests
     {
@@ -26,30 +31,97 @@
             return controller;
         }
 
-        #region"GetInmateByID"
-        [Theory]
-        [InlineData(10,"Test10")]
-        [InlineData(20, "Test20")]
-        public async Task GetInmateByID(int inputValue, string expectedValue)
+        #region"GetInmateByIDTests"
+        ///<summary>
+        ///Check GetInmateByID returns a response. 
+        ///</summary>
+        [Fact]
+        public async Task GetInmateByIDTest()
         {
             //Mock Service Response.
-            Mock<IInmateService> inmateService = this.GetMockGetInmateByID(inputValue);
+            Mock<IInmateService> inmateService = this.GetMockInmateService();
             //Create controller with mocked service.
             InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
 
             //Call the Api/Controller
-            ActionResult<Inmate> result = await controllerResponse.GetInmateByID(inputValue).ConfigureAwait(false);
+            ActionResult<Inmate> result = await controllerResponse.GetInmateByID(10).ConfigureAwait(false);
             
             //Verify the object response type
             ActionResult<Inmate> viewResult = Assert.IsType<ActionResult<Inmate>>(result);
 
             //Verify the number of results are right
-            Assert.Equal(expectedValue, viewResult.Value.LastName);
+            Assert.Equal(10, viewResult.Value.Id);
         }
 
-        #endregion"GetInmateByID"
+        ///<summary>
+        ///Check GetInmateByID returns a 404 when not inmate is not found. 
+        ///</summary>
+        [Fact]
+        public async Task GetInmateByIDTest_Returns404()
+        {
+            //Mock Service Response.
+            Mock<IInmateService> inmateService = this.GetMockInmateService();
+            //Create controller with mocked service.
+            InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
 
-        #region"GetAllInmates"
+            //Call the Api/Controller
+            ActionResult<Inmate> result = await controllerResponse.GetInmateByID(10).ConfigureAwait(false);
+
+            //Verify the object response type
+            Assert.IsType<ActionResult<Inmate>>(result);
+
+            //Verify the number of results are right
+            Assert.Equal(404, ((ObjectResult)result.Result).StatusCode);
+        }
+        #endregion"GetInmateByIDTests"
+
+        #region"GetInmateByNameAndBirthDateTests"
+        /// <summary>
+        /// Check GetInmateByNameAndBirthDate returns a response.
+        /// </summary>
+        [Fact]
+        public async Task GetInmateByNameAndBirthDateTest()
+        {
+            //Mock Service Response.
+            Mock<IInmateService> inmateService = this.GetMockInmateService();
+            //Create controller with mocked service.
+            InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
+
+            //Call the Api/Controller
+            ActionResult<Inmate> result = await controllerResponse.GetInmateByNameAndBirthDate("Test1", "Test1", new DateTime(1970, 05, 01)).ConfigureAwait(false);
+
+            //Verify the object response type
+            ActionResult<Inmate> viewResult = Assert.IsType<ActionResult<Inmate>>(result);
+
+            //Verify the number of results are right
+            Assert.Equal("Test1", viewResult.Value.FirstName);
+        }
+
+        /// <summary>
+        /// Check GetInmateByNameAndBirthDate returns a 404 when not inmate is not found. 
+        /// </summary>
+        [Fact]
+        public async Task GetInmateByNameAndBirthDateTest_Returns404()
+        {
+            //Mock Service Response.
+            Mock<IInmateService> inmateService = this.GetMockInmateService();
+            //Create controller with mocked service.
+            InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
+
+            
+            //Call the Api/Controller
+            ActionResult<Inmate> result = await controllerResponse.GetInmateByNameAndBirthDate("Test2", "Test1", new DateTime(1970, 05, 01)).ConfigureAwait(false);
+         
+            //Verify the object response type
+            Assert.IsType<ActionResult<Inmate>>(result);
+
+            //Verify the number of results are right
+            Assert.Equal(404, ((ObjectResult)result.Result).StatusCode);
+        }
+        #endregion"GetInmateByNameAndBirthDateTests"
+
+
+        #region"GetAllInmatesTests"
         ///<summary>
         ///Check if GetAllInmatesTest return correct data type. 
         ///</summary>
@@ -57,7 +129,7 @@
         public async Task GetAllInmatesTest()
         {
             //Mock Service Response.
-            Mock<IInmateService> inmateService = this.GetMockGetAllInmates();
+            Mock<IInmateService> inmateService = this.GetMockInmateService();
 
             //Create controller with mocked service.
             InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
@@ -71,7 +143,7 @@
             //Verify the number of results are right
             Assert.Equal(3, viewResult.Value.Count);
         }
-        #endregion"GetAllInmates"
+        #endregion"GetAllInmatesTests"
 
 
         #region "GetInmatesForMyLocationTests"
@@ -79,7 +151,7 @@
         ///Check if a token with a location returns a response. 
         ///</summary>
         [Fact]
-        public async Task GetInmatesForMyLocationValidLocationTest()
+        public async Task GetInmatesForMyLocation_ValidLocationTest()
         {
             //Mock Http
             var httpContext = new Mock<HttpContext>();
@@ -92,7 +164,7 @@
             httpContext.Setup(x => x.User).Returns(user);
 
             //Mock Service Response.
-            Mock<IInmateService> inmateService = this.GetMockGetInmatesForMyLocation();
+            Mock<IInmateService> inmateService = this.GetMockInmateService();
 
             //Create controller with mocked service.
             InmatesController controllerResponse = this.CreateInmateController(httpContext, inmateService.Object);
@@ -111,7 +183,7 @@
         ///</summary>
         ///<returns></returns>
         [Fact]
-        public async Task GetInmatesForMyLocationInvalidLocationTest()
+        public async Task GetInmatesForMyLocation_InvalidLocationTest()
         {
             //Mock Http
             var httpContext = new Mock<HttpContext>();
@@ -123,13 +195,15 @@
             httpContext.Setup(x => x.User).Returns(user);
 
             //Mock Service Response.
-            Mock<IInmateService> inmateService = this.GetMockGetInmatesForMyLocation();
+            Mock<IInmateService> inmateService = this.GetMockInmateService();
 
             //Create controller with mocked service.
             InmatesController controllerResponse = this.CreateInmateController(httpContext, inmateService.Object);
-
-
+            
+            //Call the Api
             var result = await controllerResponse.GetInmatesForMyLocation().ConfigureAwait(false);
+
+            //Verify the number of results returns a 404.
             Assert.Equal(404, ((ObjectResult)result.Result).StatusCode);
         }
         #endregion "GetInmatesForMyLocationTests"
@@ -139,54 +213,33 @@
         ///Get Mock Data
         ///</summary>
         ///<returns>Mock responst of GetInmatesForMyLocation</returns>
-        internal Mock<IInmateService> GetMockGetInmateByID(int inputValue)
+        internal Mock<IInmateService> GetMockInmateService()
         {
-            Mock<IInmateService> getMockGetInmateByID = new Mock<IInmateService>();
-            Inmate inmate10 = new Inmate { Id = 10, FirstName = "Test10", LastName = "Test10", Location = "Location10" };
-            Inmate inmate20 = new Inmate { Id = 10, FirstName = "Test20", LastName = "Test20", Location = "Location12" };
+            Mock<IInmateService> mockInmateService = new Mock<IInmateService>();
 
-            //Mock GetInmatesForMyLocation() and its response
-            getMockGetInmateByID.Setup(service => service.GetInmateByID(10)).Returns(Task.FromResult(inmate10));
-            getMockGetInmateByID.Setup(service => service.GetInmateByID(20)).Returns(Task.FromResult(inmate20));
-            return getMockGetInmateByID;
-        }
-
-        ///<summary>
-        ///Get Mock Data
-        ///</summary>
-        ///<returns>Mock responst of GetInmatesForMyLocation</returns>
-        internal Mock<IInmateService> GetMockGetInmatesForMyLocation()
-        {
-            Mock<IInmateService> getInmatesForMyLocation = new Mock<IInmateService>();
-            List<Inmate> inmatesbyLocation = new List<Inmate>
-            {
-                new Inmate{ Id = 10, FirstName = "Test1", LastName = "Test1", Location = "Location1" },
-                new Inmate{ Id = 20, FirstName = "Test2", LastName = "Test2", Location = "Location1" },
-                new Inmate{ Id = 30, FirstName = "Test3", LastName = "Test3", Location = "Location1" },
-            };
-
-            //Mock GetInmatesForMyLocation() and its response
-            getInmatesForMyLocation.Setup(service => service.GetInmatesForMyLocation(It.IsAny<string>())).Returns(Task.FromResult(inmatesbyLocation));
-            return getInmatesForMyLocation;
-        }
-
-        ///<summary>
-        ///Get Mock Data
-        ///</summary>
-        ///<returns>Mock responst of GetMockGetAllInmates</returns>
-        internal Mock<IInmateService> GetMockGetAllInmates()
-        {
-            Mock<IInmateService> getAllInmates = new Mock<IInmateService>();
             List<Inmate> inmates = new List<Inmate>
             {
-                new Inmate{ Id = 10, FirstName = "Test1", LastName = "Test1", Location = "Location1" },
-                new Inmate{ Id = 20, FirstName = "Test2", LastName = "Test2", Location = "Location1" },
-                new Inmate{ Id = 30, FirstName = "Test3", LastName = "Test3", Location = "Location1" },
+                new Inmate{ Id = 10, FirstName = "Test1", LastName = "Test1", DateOfBirth = new DateTime(1970, 05, 01), Location = "Location1" },
+                new Inmate{ Id = 20, FirstName = "Test2", LastName = "Test2", DateOfBirth = new DateTime(1975, 10, 10), Location = "Location1" },
+                new Inmate{ Id = 30, FirstName = "Test3", LastName = "Test3", DateOfBirth = new DateTime(1971, 12, 31), Location = "Location1" },
             };
 
+            //Mock GetInmateByID() and its response
+            mockInmateService.Setup(service => service.GetInmateByID(10)).Returns(Task.FromResult(inmates.FirstOrDefault()));
+            mockInmateService.Setup(service => service.GetInmateByID(20)).Returns(Task.FromResult(inmates.ElementAt(1)));
+
+            //Mock GetInmateByID() and its response
+            mockInmateService.Setup(service => service.GetInmateByNameAndBirthDate("Test1", "Test1", new DateTime(1970, 05, 01))).Returns(Task.FromResult(inmates.FirstOrDefault()));
+            mockInmateService.Setup(service => service.GetInmateByNameAndBirthDate("Test2", "Test2", new DateTime(1975, 10, 10))).Returns(Task.FromResult(inmates.ElementAt(1)));
+
+
             //Mock GetAllInmates() and its response
-            getAllInmates.Setup(service => service.GetAllInmates()).Returns(Task.FromResult(inmates));
-            return getAllInmates;
+            mockInmateService.Setup(service => service.GetAllInmates()).Returns(Task.FromResult(inmates));
+
+            //Mock GetInmatesForMyLocation() and its response
+            mockInmateService.Setup(service => service.GetInmatesForMyLocation("Location1")).Returns(Task.FromResult(inmates));
+
+            return mockInmateService;
         }
         #endregion "Helper"
 
