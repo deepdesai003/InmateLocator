@@ -52,12 +52,12 @@
         ///</remarks>
         /// <response code="404">Inmate not found</response>  
         /// <returns>Inmate Object</returns>
-        [HttpGet("{id}")]
+        [HttpGet("GetInmateByID/{id}")]
         [AllowAnonymous]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Inmate>> GetInmate(int id)
+        public async Task<ActionResult<Inmate>> GetInmateByID(int id)
         {
             var inmate = await this._inmatesService.GetInmateByID(id);
 

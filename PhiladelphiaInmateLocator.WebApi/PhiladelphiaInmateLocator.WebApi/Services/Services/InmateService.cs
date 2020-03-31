@@ -1,6 +1,7 @@
 ﻿namespace PhiladelphiaInmateLocator.WebApi.Services.Services
 {
     using Microsoft.EntityFrameworkCore;
+    using PhiladelphiaInmateLocator.WebApi.Entities;
     using PhiladelphiaInmateLocator.WebApi.Models;
     using PhiladelphiaInmateLocator.WebApi.Services.Interface;
     using System;
@@ -11,8 +12,8 @@
 
     public class InmateService : IInmateService
     {
-        public InmateDatabaseService _inmateDatabase;
-        public InmateService (InmateDatabaseService inmateDatabase)
+        public InmateDatabase _inmateDatabase;
+        public InmateService(InmateDatabase inmateDatabase)
         {
             _inmateDatabase = inmateDatabase;
         }
