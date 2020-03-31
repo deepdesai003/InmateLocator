@@ -60,7 +60,7 @@
             return await _inmateDatabase.Inmates.ToListAsync();
         }
 
-        public async Task<List<Inmate>> GetInmatesForMyLocation(string Location)
+        public async Task<List<Inmate>> GetInmatesByLocation(string Location)
         {
             List<Inmate> inmates = await _inmateDatabase.Inmates.ToListAsync().ConfigureAwait(false);
             return inmates.Where(inmate => inmate.Location.Equals(Location)).ToList();

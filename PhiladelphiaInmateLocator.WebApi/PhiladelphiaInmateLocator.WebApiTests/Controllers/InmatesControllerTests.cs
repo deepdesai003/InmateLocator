@@ -65,7 +65,7 @@
             InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
 
             //Call the Api/Controller
-            ActionResult<Inmate> result = await controllerResponse.GetInmateByID(10).ConfigureAwait(false);
+            ActionResult<Inmate> result = await controllerResponse.GetInmateByID(100).ConfigureAwait(false);
 
             //Verify the object response type
             Assert.IsType<ActionResult<Inmate>>(result);
@@ -237,7 +237,7 @@
             mockInmateService.Setup(service => service.GetAllInmates()).Returns(Task.FromResult(inmates));
 
             //Mock GetInmatesForMyLocation() and its response
-            mockInmateService.Setup(service => service.GetInmatesForMyLocation("Location1")).Returns(Task.FromResult(inmates));
+            mockInmateService.Setup(service => service.GetInmatesByLocation("Location1")).Returns(Task.FromResult(inmates));
 
             return mockInmateService;
         }
