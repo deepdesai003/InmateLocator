@@ -154,7 +154,7 @@
                 return NotFound("Location not found for the user");
             }
 
-            return await this._inmatesService.GetInmatesForMyLocation(Location: LocationOfUser);
+            return await this._inmatesService.GetInmatesByLocation(Location: LocationOfUser);
         }
     }
 }

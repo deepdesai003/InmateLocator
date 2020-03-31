@@ -20,6 +20,6 @@
 
         Task<List<Inmate>> GetAllInmates();
 
-        Task<List<Inmate>> GetInmatesForMyLocation(string Location);
+        Task<List<Inmate>> GetInmatesByLocation(string Location);
     }
 }

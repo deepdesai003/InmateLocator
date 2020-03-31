@@ -237,7 +237,7 @@
             mockInmateService.Setup(service => service.GetAllInmates()).Returns(Task.FromResult(inmates));
 
             //Mock GetInmatesForMyLocation() and its response
-            mockInmateService.Setup(service => service.GetInmatesForMyLocation("Location1")).Returns(Task.FromResult(inmates));
+            mockInmateService.Setup(service => service.GetInmatesByLocation("Location1")).Returns(Task.FromResult(inmates));
 
             return mockInmateService;
         }
