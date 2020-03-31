@@ -59,7 +59,7 @@
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Inmate>> GetInmateByID(int id)
         {
-            var inmate = await this._inmatesService.GetInmateByID(id);
+            Inmate inmate = await this._inmatesService.GetInmateByID(id);
 
             if (inmate == null)
             {
@@ -83,15 +83,36 @@
         /// 
         /// Requires: Non-authenticated users 
         ///</remarks>
-        /// <response code="404">Inmate not found</response>  
+        /// <response code="404">Inmate not found.</response>  
+        /// <response code="400">Parameter are invalid.</response>  
         /// <returns>Inmate Object</returns>
         [HttpGet("GetInmateByNameAndBirthDate/{FirstName}/{LastName}/{DateOfBirth}")]
         [AllowAnonymous]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Inmate>> GetInmateByNameAndBirthDate(string firstName, string lastName, DateTime dateOfBirth)
         {
+            if(string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || dateOfBirth.Equals(default))
+            {
+                string error = string.Empty;
+                if(string.IsNullOrEmpty(firstName))
+                {
+                    error = "First Name is null or Empty";
+                }
+                else if(string.IsNullOrEmpty(lastName))
+                {
+                    error = "Last Name is null or Empty";
+                }
+                else
+                {
+                    error = "Date cannot be default";
+                }
+
+                return BadRequest(error);
+            }
+
             Inmate inmates = await _inmatesService.GetInmateByNameAndBirthDate(firstName, lastName, dateOfBirth).ConfigureAwait(false);
 
             if(inmates == null)

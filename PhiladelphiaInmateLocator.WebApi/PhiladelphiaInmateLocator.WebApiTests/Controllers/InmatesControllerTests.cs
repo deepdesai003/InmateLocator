@@ -17,6 +17,7 @@
     using System.Net.Http;
     using Microsoft.AspNetCore.Hosting;
     using System.Linq;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     public class InmatesControllerTests
     {
@@ -108,7 +109,6 @@
             //Create controller with mocked service.
             InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
 
-            
             //Call the Api/Controller
             ActionResult<Inmate> result = await controllerResponse.GetInmateByNameAndBirthDate("Test2", "Test1", new DateTime(1970, 05, 01)).ConfigureAwait(false);
          
@@ -118,6 +118,22 @@
             //Verify the number of results are right
             Assert.Equal(404, ((ObjectResult)result.Result).StatusCode);
         }
+
+        [Fact]
+        public async Task GetInmateByNameAndBirthDate_InvalidParametersTest()
+        {
+            //Mock Service Response.
+            Mock<IInmateService> inmateService = this.GetMockInmateService();
+
+            //Create controller with mocked service.
+            InmatesController controllerResponse = this.CreateInmateController(new Mock<HttpContext>(), inmateService.Object);
+
+            //Call the Api/Controller
+            var result = (await controllerResponse.GetInmateByNameAndBirthDate(string.Empty, string.Empty, new DateTime(1970, 05, 01)).ConfigureAwait(false)).Result as ObjectResult;
+
+            Assert.Equal(400, result.StatusCode);
+        }
+
         #endregion"GetInmateByNameAndBirthDateTests"
 
 
@@ -228,10 +244,10 @@
             mockInmateService.Setup(service => service.GetInmateByID(10)).Returns(Task.FromResult(inmates.FirstOrDefault()));
             mockInmateService.Setup(service => service.GetInmateByID(20)).Returns(Task.FromResult(inmates.ElementAt(1)));
 
-            //Mock GetInmateByID() and its response
+            //Mock GetInmateByNameAndBirthDate() and its response
             mockInmateService.Setup(service => service.GetInmateByNameAndBirthDate("Test1", "Test1", new DateTime(1970, 05, 01))).Returns(Task.FromResult(inmates.FirstOrDefault()));
             mockInmateService.Setup(service => service.GetInmateByNameAndBirthDate("Test2", "Test2", new DateTime(1975, 10, 10))).Returns(Task.FromResult(inmates.ElementAt(1)));
-
+            mockInmateService.Setup(service => service.GetInmateByNameAndBirthDate(string.Empty, string.Empty, new DateTime(1975, 10, 10))).Returns(Task.FromResult(new Inmate()));
 
             //Mock GetAllInmates() and its response
             mockInmateService.Setup(service => service.GetAllInmates()).Returns(Task.FromResult(inmates));
