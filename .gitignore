@@ -10,3 +10,4 @@ PhiladelphiaInmateLocator.WebApi/.vs/PhiladelphiaInmateLocator.WebApi/v16/
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApiTests/obj/
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApiTests1/obj/
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApiTests/bin/
+*.v2
