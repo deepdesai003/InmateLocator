@@ -11,3 +11,6 @@ PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApiTests/obj/
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApiTests1/obj/
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApiTests/bin/
 *.v2
+PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/Properties/
+PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/.config/dotnet-tools.json
+*.user

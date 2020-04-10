@@ -65,5 +65,11 @@
             List<Inmate> inmates = await _inmateDatabase.Inmates.ToListAsync().ConfigureAwait(false);
             return inmates.Where(inmate => inmate.Location.Equals(Location)).ToList();
         }
+
+        public async Task AddInmate(Inmate inmate)
+        {
+            _inmateDatabase.Inmates.Add(inmate);
+            await this._inmateDatabase.SaveChangesAsync().ConfigureAwait(false); ;
+        }
     }
 }
