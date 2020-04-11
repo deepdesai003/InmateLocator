@@ -13,7 +13,7 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Inmate>().ToTable("INMATES");
+            modelBuilder.Entity<Inmate>().ToTable("Inmates");
         }
     }
 }

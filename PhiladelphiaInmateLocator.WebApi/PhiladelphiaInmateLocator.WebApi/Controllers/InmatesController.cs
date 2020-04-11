@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using PhiladelphiaInmateLocator.WebApi.Models;
     using PhiladelphiaInmateLocator.WebApi.Services.Interface;
 
@@ -39,7 +38,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<Inmate>>> SetData()
         {
-            return await this._inmatesService.SetData();
+            return await this._inmatesService.SetData().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -59,7 +58,7 @@
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Inmate>> GetInmateByID(int id)
         {
-            Inmate inmate = await this._inmatesService.GetInmateByID(id);
+            Inmate inmate = await this._inmatesService.GetInmateByID(id).ConfigureAwait(false);
 
             if (inmate == null)
             {
@@ -96,7 +95,7 @@
         {
             if(string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || dateOfBirth.Equals(default))
             {
-                string error = string.Empty;
+                string error;
                 if(string.IsNullOrEmpty(firstName))
                 {
                     error = "First Name is null or Empty";
@@ -165,9 +164,9 @@
 
             ClaimsPrincipal currentUser = HttpContext.User;
 
-            if(currentUser.HasClaim(claim => claim.Type.Equals("location")))
+            if(currentUser.HasClaim(claim => claim.Type.Equals("location", StringComparison.OrdinalIgnoreCase)))
             {
-                LocationOfUser = currentUser.Claims.FirstOrDefault(claim => claim.Type.Equals("location")).Value;
+                LocationOfUser = currentUser.Claims.FirstOrDefault(claim => claim.Type.Equals("location", StringComparison.OrdinalIgnoreCase)).Value;
             }
 
             if(string.IsNullOrEmpty(LocationOfUser))
@@ -175,14 +174,14 @@
                 return NotFound("Location not found for the user");
             }
 
-            return await this._inmatesService.GetInmatesByLocation(Location: LocationOfUser);
+            return await this._inmatesService.GetInmatesByLocation(Location: LocationOfUser).ConfigureAwait(false);
         }
 
         [HttpPost("AddInmate")]
         [AllowAnonymous]
         public async Task<ActionResult> AddInmate(Inmate inmate)
         {
-            await this._inmatesService.AddInmate(inmate);
+            await this._inmatesService.AddInmate(inmate).ConfigureAwait(false);
             return Ok();
         }
     }

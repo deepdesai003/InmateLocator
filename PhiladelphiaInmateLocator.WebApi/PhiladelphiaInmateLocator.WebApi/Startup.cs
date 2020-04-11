@@ -15,7 +15,6 @@ namespace PhiladelphiaInmateLocator.WebApi
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
     using PhiladelphiaInmateLocator.WebApi.Entities;
-    using PhiladelphiaInmateLocator.WebApi.Models;
     using PhiladelphiaInmateLocator.WebApi.Services.Interface;
     using PhiladelphiaInmateLocator.WebApi.Services.Services;
 
@@ -32,7 +31,10 @@ namespace PhiladelphiaInmateLocator.WebApi
         public void ConfigureServices (IServiceCollection services)
         {
             
-            services.AddDbContext<InmateDatabase>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<InmateDatabase>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
             
             services.AddControllers();
 
