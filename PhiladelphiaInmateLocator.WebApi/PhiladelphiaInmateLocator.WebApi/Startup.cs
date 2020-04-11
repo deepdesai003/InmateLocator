@@ -32,7 +32,7 @@ namespace PhiladelphiaInmateLocator.WebApi
         public void ConfigureServices (IServiceCollection services)
         {
             
-            services.AddDbContext<InmateDatabase>(options => options.UseInMemoryDatabase("Inmate"));
+            services.AddDbContext<InmateDatabase>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddControllers();
 

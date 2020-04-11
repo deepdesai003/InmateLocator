@@ -2,18 +2,18 @@
 {
     using Microsoft.EntityFrameworkCore;
     using PhiladelphiaInmateLocator.WebApi.Models;
-    using PhiladelphiaInmateLocator.WebApi.Services.Interface;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class InmateDatabase : DbContext
     {
-        public InmateDatabase(DbContextOptions<InmateDatabase> inmateDatabase) : base(inmateDatabase)
+        public InmateDatabase(DbContextOptions<InmateDatabase> options) : base(options)
         {
         }
 
         public DbSet<Inmate> Inmates { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Inmate>().ToTable("INMATES");
+        }
     }
 }
