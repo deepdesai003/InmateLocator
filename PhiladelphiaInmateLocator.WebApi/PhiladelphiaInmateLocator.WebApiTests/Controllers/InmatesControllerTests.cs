@@ -4,7 +4,6 @@
     using PhiladelphiaInmateLocator.WebApi.Controllers;
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using PhiladelphiaInmateLocator.WebApi.Services.Interface;
     using Moq;
     using System.Threading.Tasks;
@@ -12,12 +11,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Http;
     using System.Security.Claims;
-    using System.Net;
-    using Microsoft.AspNetCore.TestHost;
-    using System.Net.Http;
-    using Microsoft.AspNetCore.Hosting;
     using System.Linq;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     public class InmatesControllerTests
     {
