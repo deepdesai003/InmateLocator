@@ -177,5 +177,13 @@
 
             return await this._inmatesService.GetInmatesByLocation(Location: LocationOfUser);
         }
+
+        [HttpPost("AddInmate")]
+        [AllowAnonymous]
+        public async Task<ActionResult> AddInmate(Inmate inmate)
+        {
+            await this._inmatesService.AddInmate(inmate);
+            return Ok();
+        }
     }
 }

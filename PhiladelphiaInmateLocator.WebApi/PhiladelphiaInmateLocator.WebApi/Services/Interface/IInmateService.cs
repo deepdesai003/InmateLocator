@@ -21,5 +21,7 @@
         Task<List<Inmate>> GetAllInmates();
 
         Task<List<Inmate>> GetInmatesByLocation(string Location);
+
+        Task AddInmate(Inmate inmate);
     }
 }
