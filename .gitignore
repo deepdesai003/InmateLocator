@@ -14,3 +14,10 @@ PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/.config/
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApiTests/obj/
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApiTests/bin/
 
+PhiladelphiaInmateLocator.WebApi/.vs/PhiladelphiaInmateLocator.WebApi/DesignTimeBuild/.dtbcache.v2
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+.vs/InmateLocator/v16/TestStore/0/000.testlog
+.vs/InmateLocator/v16/.suo
+PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi.csproj.user
+.vs/InmateLocator/v16/TestStore/0/testlog.manifest
