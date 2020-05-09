@@ -96,8 +96,8 @@ namespace PhiladelphiaInmateLocator.WebApi
                         ValidateActor = false,
                     };
                 });
-
-            services.AddScoped<IInmateService, InmateService>();
+            services.AddScoped<IInmateService, InmateService>(); 
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,9 +11,13 @@
 
         public DbSet<Inmate> Inmates { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Inmate>().ToTable("INMATES");
+            modelBuilder.Entity<User>().ToTable("Users");
         }
     }
 }
