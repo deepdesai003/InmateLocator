@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using System.Web.Http;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,8 @@
     using PhiladelphiaInmateLocator.WebApi.Models;
     using PhiladelphiaInmateLocator.WebApi.Services.Interface;
 
-    [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class InmatesController : Controller
+    public class InmatesController : ApiController
     {
         private readonly IInmateService _inmatesService;
 

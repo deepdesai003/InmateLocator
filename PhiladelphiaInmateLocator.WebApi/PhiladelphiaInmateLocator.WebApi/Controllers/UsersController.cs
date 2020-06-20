@@ -13,7 +13,7 @@ namespace PhiladelphiaInmateLocator.WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UsersController : Controller
+    public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -21,19 +21,18 @@ namespace PhiladelphiaInmateLocator.WebApi.Controllers
         {
             this._userService = userService;
         }
-        /*
+
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateModel model)
+        public IActionResult Authenticate(string username, string password)
         {
-            var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _userService.Authenticate(username, password);
 
             if(user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             return Ok(user);
         }
-        */
 
         // GET: Users/Details/5
         [HttpGet]
