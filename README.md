@@ -1,6 +1,4 @@
-# City of Philadelphia Take Home Project
-
-Take home project for engineering candidates at City of Philadelphia
+# City of Philadelphia Project
 
 ## The problem. 
 
