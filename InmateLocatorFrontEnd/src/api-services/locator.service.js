@@ -7,6 +7,13 @@ export default {
   get(id) {
     return Axios.get(`${RESOURCE_NAME}/${id}`);
   },
+  getAuth(id, token) {
+    return Axios.get(`${RESOURCE_NAME}/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  },
   create(data) {
     return Axios.post(RESOURCE_NAME, data);
   },

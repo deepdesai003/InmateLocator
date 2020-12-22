@@ -7,7 +7,7 @@
             <div class="col-md-3">Birth Date</div>
             <div class="col-md-3">Location</div>
           </div>
-          <div class="row">
+          <div class="row" v-for="detail in details">
             <div class="col-md-3">{{detail.id}}</div>
             <div class="col-md-3">{{detail.firstName}} {{detail.lastName}}  </div>
             <div class="col-md-3">{{moment(detail.dateOfBirth).format('DD MMM YYYY')}}</div>
@@ -21,6 +21,6 @@
   export default {
     name: 'inmate_detail',
 
-    props: ['detail'],
+    props: ['details'],
   }
 </script>

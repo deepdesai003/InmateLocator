@@ -2,25 +2,26 @@
   <div class='tab' v-show='isActive'>
     <slot></slot>
     <div class="tab__body">
-      <h2>{{description}}</h2>
+      <h2>Get all the Inmates</h2>
 
       <form class="form-group" v-on:submit.prevent="search">
         <div class="level">
           <div class="level-left">
             <div class="level-item">
             </div>
+
             <div class="form-group">
-              <label for="inmateid">Inmate ID</label>
-              <input type="number" class="form-control" id="id" v-model.number="id" placeholder="Enter Inmate ID">
+              <label for="access_token">Token</label>
+              <input type="text" class="form-control" id="access_token" v-model.string="access_token" placeholder="Enter admin token">
             </div>
             <div>
-              <button type="submit" class="btn btn-primary button">Search</button>
+              <button type="submit" class="btn btn-primary button">Get All Inmates</button>
             </div>
           </div>
         </div>
       </form>
       <div v-if="inmate_details">
-        <inmate-details v-bind:details="inmate_details"></inmate-details>
+          <inmate-details v-bind:details="inmate_details"></inmate-details>
         <div v-if="api_message">{{api_message}}</div>
       </div>
     </div>
@@ -34,8 +35,9 @@
 
   export default {
     name: 'inmate',
+
     data: {
-      inmate_detail: null,
+      inmate_details: null,
       id: null,
       api_message: null,
     },
@@ -44,10 +46,12 @@
         var self = this;
         self.api_message = 'loading data...';
         self.inmate_details = [];
-        LocatorService.get(`GetInmateByID/${this.id}`)
+        debugger;
+        LocatorService.getAuth(`GetAllInmates`, self.access_token)
           .then(function (response) {
+            debugger;
             self.api_message = '';
-            self.inmate_details.push(response.data);
+            self.inmate_details = response.data;
           })
           .catch(function (error) {
             self.api_message = `Failed to load Inmate data! ${error.message}`;
@@ -75,13 +79,11 @@
     data() {
       return {
         isActive: true,
-        inmate_details: null,
+        inmate_details: [],
         id: null,
         api_message: null,
-        firstName: null,
-        lastName: null,
-        dateOfBirth: null,
+        access_token: null,
       }
     }
-  };
+  }
 </script>

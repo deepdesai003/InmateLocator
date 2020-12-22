@@ -29,17 +29,17 @@
           </div>
         </div>
       </form>
-      <div v-if="inmate_detail">
-        <inmate-detail v-bind:detail="inmate_detail"></inmate-detail>
+      <div v-if="inmate_details">
+        <inmate-details v-bind:details="inmate_details"></inmate-details>
+        <div v-if="api_message">{{api_message}}</div>
       </div>
-      <div v-if="api_message">{{api_message}}</div>
     </div>
   </div>
 </template>
 
 <script>
   import BootstrapVue from 'bootstrap-vue';
-  import Detail from '@/components/Search/Detail'
+  import Details from '@/components/Search/Detail'
   import LocatorService from '@/api-services/locator.service'
 
   export default {
@@ -54,13 +54,12 @@
       search: function () {
         var self = this;
         self.api_message = 'loading data...';
-        self.inmate_detail = null;
+        self.inmate_details = [];
 
         LocatorService.get(`GetInmateByNameAndBirthDate/${this.firstName}/${this.lastName}/${this.dateOfBirth}`)
           .then(function (response) {
-            debugger;
             self.api_message = '';
-            self.inmate_detail = response.data;
+            self.inmate_details.push(response.data);
           })
           .catch(function (error) {
             self.api_message = `Failed to load Inmate data! ${error.message}`;
@@ -69,7 +68,7 @@
     },
 
     components: {
-      'inmate-detail': Detail,
+      'inmate-details': Details,
       'BootstrapVue': BootstrapVue,
     },
     props: {
@@ -88,7 +87,7 @@
     data() {
       return {
         isActive: true,
-        inmate_detail: null,
+        inmate_details: null,
         id: null,
         api_message: null,
         firstName: null,
