@@ -24,3 +24,6 @@ PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/PhiladelphiaIn
 PhiladelphiaInmateLocator.WebApi/.vs/PhiladelphiaInmateLocator.WebApi/config/
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/appsettings - Copy.json.Example
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/appsettings.json
+InmateLocatorFrontEnd/node_modules/
+InmateLocatorFrontEnd/.vs/slnx.sqlite
+InmateLocatorFrontEnd/.vs/InmateLocatorFrontEnd/v16/.suo
