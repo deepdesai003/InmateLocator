@@ -18,11 +18,18 @@
   import 'bootstrap/dist/css/bootstrap.css';
   import 'bootstrap-vue/dist/bootstrap-vue.css';
   import Navbar from '@/components/Navbar';
+  //import Search from './Search.vue'
 
   export default {
     name: 'App',
     components: {
       Navbar,
+     // Search,
+    },
+    data() {
+      return {
+        Navbar: null,
+      }
     }
   };
 </script>

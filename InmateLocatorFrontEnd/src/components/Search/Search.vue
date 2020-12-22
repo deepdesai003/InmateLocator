@@ -1,15 +1,15 @@
 <template lang="html">
   <div class='container-fluid'>
-    <navbar></navbar>
     <tabs>
-      <tab title="SearchByID" description="Search By Inmate ID"></tab>
-      <tab title="SearchByNameandDOB" description="Search Using Full Name and Birth Date"></tab>
+      <SearchByID title="ID Search" type="SearchByID" description="Search By Inmate ID"></SearchByID>
+      <SearchByName title="Name Search" type="SearchByNameandDOB" description="Search Using Full Name and Birth Date"></SearchByName>
     </tabs>
   </div>
 </template>
 
 <script>
-  import Tab from './Tab.vue'
+  import SearchByID from './SearchByID.vue'
+  import SearchByName from './SearchByName.vue'
   import Tabs from './Tabs.vue'
 
 
@@ -18,7 +18,8 @@
     props: ['detail'],
     
     components: {
-      Tab,
+      SearchByID,
+      SearchByName,
       Tabs
     }
   }
