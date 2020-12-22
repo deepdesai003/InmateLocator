@@ -1,26 +1,20 @@
 <template>
     <div class="inmate_detail box" id="inmate_detail">
-      <table class="table">
-        <tbody>
-          <tr>
-            <th>Inmate ID</th>
-            <td>{{detail.id}}</td>
-          </tr>
-          <tr>
-            <th>Name</th>
-            <td>{{detail.firstName}} {{detail.lastName}}  </td>
-          </tr>
-          <tr v-if="detail.dateOfBirth">
-            <th>Birth Date</th>
-            <td v-if="detail.dateOfBirth">{{moment(detail.dateOfBirth).format('DD MMM YYYY')}}</td>
-          </tr>
-          <tr v-if="detail.location">
-            <th>Location</th>
-            <td v-if="detail.location">{{detail.location}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <div class="container">
+          <div class="row" style="font-weight: bold;">
+            <div class="col-md-3">Inmate ID</div>
+            <div class="col-md-3">Name</div>
+            <div class="col-md-3">Birth Date</div>
+            <div class="col-md-3">Location</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">{{detail.id}}</div>
+            <div class="col-md-3">{{detail.firstName}} {{detail.lastName}}  </div>
+            <div class="col-md-3">{{moment(detail.dateOfBirth).format('DD MMM YYYY')}}</div>
+            <div class="col-md-3">{{detail.location}}</div>
+          </div>
+        </div>
+      </div>
 </template>
 
 <script>
