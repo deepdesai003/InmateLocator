@@ -6,6 +6,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -108,6 +109,7 @@
                 else
                 {
                     error = "Date cannot be default";
+
                 }
 
                 return BadRequest(error);
