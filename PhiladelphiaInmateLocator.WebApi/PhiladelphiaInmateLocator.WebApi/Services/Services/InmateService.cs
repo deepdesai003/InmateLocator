@@ -49,10 +49,10 @@
 
         public async Task<Inmate> GetInmateByNameAndBirthDate(string firstName, string lastName, DateTime dateOfBirth)
         {
-            return await _inmateDatabase.Inmates.FirstOrDefaultAsync(inmate =>
+            return _inmateDatabase.Inmates.AsEnumerable().Where(inmate =>
             inmate.FirstName.Equals(firstName, StringComparison.OrdinalIgnoreCase)
                     && inmate.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase)
-                    && inmate.DateOfBirth.Equals(dateOfBirth));
+                    && inmate.DateOfBirth.Equals(dateOfBirth)).FirstOrDefault();
         }
 
         public async Task<List<Inmate>> GetAllInmates()
