@@ -5,7 +5,7 @@
         <navbar/>
       </b-col>
     </b-row>
-    <b-row>
+    <b-row style="margin-top: 20px;">
       <b-col>
         <router-view/>
       </b-col>
