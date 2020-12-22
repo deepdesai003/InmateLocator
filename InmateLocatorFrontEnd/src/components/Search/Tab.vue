@@ -49,7 +49,7 @@
 
 <script>
   import BootstrapVue from 'bootstrap-vue';
-  import Detail from '@/components/Detail'
+  import Detail from '@/components/Search/Detail'
   import LocatorService from '@/api-services/locator.service'
 
   export default {
