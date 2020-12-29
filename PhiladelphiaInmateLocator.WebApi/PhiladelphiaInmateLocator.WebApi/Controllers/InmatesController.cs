@@ -16,7 +16,6 @@
     [Route("api/[controller]")]
     [EnableCors("AllowOrigin")]
     [ApiController]
-    [Authorize]
     public class InmatesController : Controller
     {
         private readonly IInmateService _inmatesService;
