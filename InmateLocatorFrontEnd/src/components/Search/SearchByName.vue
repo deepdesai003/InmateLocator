@@ -1,6 +1,5 @@
 <template lang="html">
   <div class='tab' v-show='isActive'>
-    <slot></slot>
     <div class="tab__body">
       <h2>{{description}}</h2>
       <form class="form-group" v-on:submit.prevent="search">

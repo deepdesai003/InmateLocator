@@ -1,6 +1,5 @@
 <template lang="html">
   <div class='tab' v-show='isActive'>
-    <slot></slot>
     <div class="tab__body">
       <h2>Get all the Inmates</h2>
 
