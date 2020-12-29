@@ -35,23 +35,15 @@
 
   export default {
     name: 'inmate',
-
-    data: {
-      inmate_details: null,
-      id: null,
-      api_message: null,
-    },
     methods: {
       search: function () {
-        var self = this;
-        self.api_message = 'loading data...';
-        self.inmate_details = [];
-        debugger;
+        
+        this.api_message = 'loading data...';
+        this.inmate_details = [];
         LocatorService.getAuth(`GetAllInmates`, self.access_token)
-          .then(function (response) {
-            debugger;
-            self.api_message = '';
-            self.inmate_details = response.data;
+          .then((response) => {         
+            this.api_message = '';
+            this.inmate_details = response.data;
           })
           .catch(function (error) {
             self.api_message = `Failed to load Inmate data! ${error.message}`;
@@ -66,21 +58,20 @@
     props: {
       type: {
         type: String,
-        default: 'Tab'
+        default: 'Tab',
       },
       title: {
         type: String,
-        default: 'Tab'
+        default: 'Tab',
       },
       description: {
-        type: String
-      }
+        type: String,
+      },
     },
     data() {
       return {
         isActive: true,
         inmate_details: [],
-        id: null,
         api_message: null,
         access_token: null,
       }

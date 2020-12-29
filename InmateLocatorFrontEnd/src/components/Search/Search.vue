@@ -20,9 +20,9 @@
     components: {
       SearchByID,
       SearchByName,
-      Tabs
+      Tabs,
     }
-  }
+  };
 </script>
 
 <style lang="css">

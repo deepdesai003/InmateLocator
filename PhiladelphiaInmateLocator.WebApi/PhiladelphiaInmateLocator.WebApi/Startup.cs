@@ -35,7 +35,8 @@ namespace PhiladelphiaInmateLocator.WebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                options.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()
+                    .AllowAnyHeader());
             });
 
             services.AddDbContext<InmateDatabase>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -113,11 +114,6 @@ namespace PhiladelphiaInmateLocator.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
-
-            app.UseCors(options => options.AllowAnyOrigin());
-
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -132,7 +128,7 @@ namespace PhiladelphiaInmateLocator.WebApi
             });
             
             app.UseRouting();
-            
+            app.UseCors(options => options.AllowAnyOrigin());
             app.UseAuthentication();
             app.UseAuthorization();
             

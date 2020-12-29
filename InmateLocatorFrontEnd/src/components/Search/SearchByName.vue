@@ -3,7 +3,6 @@
     <slot></slot>
     <div class="tab__body">
       <h2>{{description}}</h2>
-
       <form class="form-group" v-on:submit.prevent="search">
         <div class="level">
           <div class="level-left">
@@ -22,7 +21,6 @@
               <label for="dateOfBirth">Birth Date</label>
               <b-form-datepicker type="date" id="dateOfBirth" name="dateOfBirth" v-model.date="dateOfBirth" show-decade-nav></b-form-datepicker>
             </div>
-
             <div>
               <button type="submit" class="btn btn-primary button">Search</button>
             </div>
@@ -44,12 +42,6 @@
 
   export default {
     name: 'inmate',
-
-    data: {
-      inmate_detail: null,
-      id: null,
-      api_message: null,
-    },
     methods: {
       search: function () {
         var self = this;
@@ -95,5 +87,6 @@
         dateOfBirth: null,
       }
     }
-  }
+  };
 </script>
+

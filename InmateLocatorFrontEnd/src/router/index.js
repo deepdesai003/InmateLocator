@@ -11,17 +11,17 @@ export default new Router({
     {
       path: '/',
       name: 'Search',
-      component: SearchVue
+      component: SearchVue,
     },
     {
       path: '*',
       name: 'NotFound',
-      component: NotFound
+      component: NotFound,
     },
     {
       path: '/Admin',
       name: 'Admin',
-      component: Admin
+      component: Admin,
     }
   ]
 });
