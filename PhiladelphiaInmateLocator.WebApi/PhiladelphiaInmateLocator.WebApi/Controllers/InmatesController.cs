@@ -14,8 +14,8 @@
     using PhiladelphiaInmateLocator.WebApi.Services.Interface;
 
     [Route("api/[controller]")]
+    [EnableCors("AllowOrigin")]
     [ApiController]
-    [Authorize]
     public class InmatesController : Controller
     {
         private readonly IInmateService _inmatesService;
@@ -135,7 +135,7 @@
         ///</remarks>
         /// <response code="401">Unauthorized Access</response>     
         /// <returns>A list of Inmates</returns>
-        [HttpGet("GetAllInmates")]
+        [HttpGet("GetAll")]
         [Authorize(Roles = "Administrator")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
