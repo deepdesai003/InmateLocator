@@ -1,5 +1,5 @@
-import Axios from 'axios';
-const RESOURCE_NAME = '/Inmates';
+import Axios from "axios";
+const RESOURCE_NAME = "/Inmates";
 export default {
   getAll() {
     return Axios.get(RESOURCE_NAME);
@@ -10,7 +10,7 @@ export default {
   getAuth(id, token) {
     return Axios.get(`${RESOURCE_NAME}/${id}`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       }
     });
   },
