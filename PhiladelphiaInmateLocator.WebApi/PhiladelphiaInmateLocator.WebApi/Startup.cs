@@ -128,7 +128,8 @@ namespace PhiladelphiaInmateLocator.WebApi
             });
             
             app.UseRouting();
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader());
+
             app.UseAuthentication();
             app.UseAuthorization();
             

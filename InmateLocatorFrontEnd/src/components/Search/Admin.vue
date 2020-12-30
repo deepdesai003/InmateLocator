@@ -1,5 +1,6 @@
 <template lang="html">
   <div class='tab' v-show='isActive'>
+    <slot></slot>
     <div class="tab__body">
       <h2>Get all the Inmates</h2>
 
@@ -36,14 +37,15 @@
     name: 'inmate',
     methods: {
       search: function () {
-        
         this.api_message = 'loading data...';
         this.inmate_details = [];
-        LocatorService.getAuth(`GetAllInmates`, self.access_token)
+        LocatorService.getAuth(`GetAllInmates`, this.access_token)
           .then((response) => {         
             this.api_message = '';
             this.inmate_details = response.data;
           })
+          .catch((error) => { 
+            this.api_message = `Failed to load Inmate data! ${error.message}`;
           .catch(function (error) {
             self.api_message = `Failed to load Inmate data! ${error.message}`;
           })
