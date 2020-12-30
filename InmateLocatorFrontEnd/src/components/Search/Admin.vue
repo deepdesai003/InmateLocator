@@ -37,7 +37,6 @@
     name: 'inmate',
     methods: {
       search: function () {
-        debugger;
         this.api_message = 'loading data...';
         this.inmate_details = [];
         LocatorService.getAuth(`GetAllInmates`, this.access_token)
@@ -47,6 +46,8 @@
           })
           .catch((error) => { 
             this.api_message = `Failed to load Inmate data! ${error.message}`;
+          .catch(function (error) {
+            self.api_message = `Failed to load Inmate data! ${error.message}`;
           })
       }
     },

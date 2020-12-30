@@ -5,6 +5,7 @@ import Search from '../components/Search/Search';
 import Admin from '../components/Search/Admin';
 import Home from '../components/Home';
 
+
 Vue.use(Router);
 
 export default new Router({
