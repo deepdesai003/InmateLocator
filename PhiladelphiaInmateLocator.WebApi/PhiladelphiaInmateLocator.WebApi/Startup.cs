@@ -21,6 +21,7 @@ namespace PhiladelphiaInmateLocator.WebApi
 
     public class Startup
     {
+
         public Startup (IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,7 +32,13 @@ namespace PhiladelphiaInmateLocator.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services)
         {
-            
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()
+                    .AllowAnyHeader());
+            });
+
             services.AddDbContext<InmateDatabase>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddControllers();
@@ -121,7 +128,8 @@ namespace PhiladelphiaInmateLocator.WebApi
             });
             
             app.UseRouting();
-            
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader());
+
             app.UseAuthentication();
             app.UseAuthorization();
             
@@ -129,6 +137,7 @@ namespace PhiladelphiaInmateLocator.WebApi
             {   
                 endpoints.MapControllers();
             });
+
 
             app.UseStatusCodePages();
         }

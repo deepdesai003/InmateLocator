@@ -7,14 +7,17 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using PhiladelphiaInmateLocator.WebApi.Models;
     using PhiladelphiaInmateLocator.WebApi.Services.Interface;
 
+    [Route("api/[controller]")]
+    [EnableCors("AllowOrigin")]
     [ApiController]
-    public class InmatesController : ApiController
+    public class InmatesController : Controller
     {
         private readonly IInmateService _inmatesService;
 
@@ -93,20 +96,21 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Inmate>> GetInmateByNameAndBirthDate(string firstName, string lastName, DateTime dateOfBirth)
         {
-            if(string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || dateOfBirth.Equals(default))
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || dateOfBirth.Equals(default))
             {
                 string error = string.Empty;
-                if(string.IsNullOrEmpty(firstName))
+                if (string.IsNullOrEmpty(firstName))
                 {
                     error = "First Name is null or Empty";
                 }
-                else if(string.IsNullOrEmpty(lastName))
+                else if (string.IsNullOrEmpty(lastName))
                 {
                     error = "Last Name is null or Empty";
                 }
                 else
                 {
                     error = "Date cannot be default";
+
                 }
 
                 return BadRequest(error);
@@ -114,7 +118,7 @@
 
             Inmate inmates = await _inmatesService.GetInmateByNameAndBirthDate(firstName, lastName, dateOfBirth).ConfigureAwait(false);
 
-            if(inmates == null)
+            if (inmates == null)
             {
                 return NotFound("No Inamte found with this combination of First Name, Last Name and Birth Date.");
             }
@@ -164,12 +168,12 @@
 
             ClaimsPrincipal currentUser = HttpContext.User;
 
-            if(currentUser.HasClaim(claim => claim.Type.Equals("location")))
+            if (currentUser.HasClaim(claim => claim.Type.Equals("location")))
             {
                 LocationOfUser = currentUser.Claims.FirstOrDefault(claim => claim.Type.Equals("location")).Value;
             }
 
-            if(string.IsNullOrEmpty(LocationOfUser))
+            if (string.IsNullOrEmpty(LocationOfUser))
             {
                 return NotFound("Location not found for the user");
             }
