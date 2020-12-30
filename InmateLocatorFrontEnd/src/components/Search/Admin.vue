@@ -37,16 +37,16 @@
     name: 'inmate',
     methods: {
       search: function () {
-        
+        debugger;
         this.api_message = 'loading data...';
         this.inmate_details = [];
-        LocatorService.getAuth(`GetAllInmates`, self.access_token)
+        LocatorService.getAuth(`GetAllInmates`, this.access_token)
           .then((response) => {         
             this.api_message = '';
             this.inmate_details = response.data;
           })
-          .catch(function (error) {
-            self.api_message = `Failed to load Inmate data! ${error.message}`;
+          .catch((error) => { 
+            this.api_message = `Failed to load Inmate data! ${error.message}`;
           })
       }
     },
