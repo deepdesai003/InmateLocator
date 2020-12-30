@@ -2,6 +2,7 @@
   <b-navbar  toggleable="lg" type="dark" variant="dark">
     <b-navbar-brand :to="{ name: 'Search' }">Inmate Locator</b-navbar-brand>
     <b-navbar-nav>
+      <b-nav-item href="#/Search">Search</b-nav-item>
       <b-nav-item href="#/Admin">Admin</b-nav-item>
     </b-navbar-nav>
   </b-navbar>
