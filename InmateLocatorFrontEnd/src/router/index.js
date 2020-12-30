@@ -14,11 +14,6 @@ export default new Router({
       component: SearchVue,
     },
     {
-      path: '*',
-      name: 'NotFound',
-      component: NotFound,
-    },
-    {
       path: '/Admin',
       name: 'Admin',
       component: Admin,
