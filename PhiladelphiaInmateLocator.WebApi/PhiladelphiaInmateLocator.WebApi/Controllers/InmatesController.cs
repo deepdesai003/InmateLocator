@@ -135,7 +135,7 @@
         ///</remarks>
         /// <response code="401">Unauthorized Access</response>     
         /// <returns>A list of Inmates</returns>
-        [HttpGet("GetAllInmates")]
+        [HttpGet("GetAll")]
         [Authorize(Roles = "Administrator")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
