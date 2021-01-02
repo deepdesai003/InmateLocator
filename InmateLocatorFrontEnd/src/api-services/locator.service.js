@@ -1,5 +1,8 @@
 import Axios from "axios";
+import { authHeader } from "../auth-helper/auth-header";
+
 const RESOURCE_NAME = "/Inmates";
+
 export default {
   getAll() {
     return Axios.get(RESOURCE_NAME);
@@ -7,11 +10,10 @@ export default {
   get(id) {
     return Axios.get(`${RESOURCE_NAME}/${id}`);
   },
-  getAuth(id, token) {
+  getAuth(id) {
+    debugger;
     return Axios.get(`${RESOURCE_NAME}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      headers: authHeader()
     });
   },
   create(data) {

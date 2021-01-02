@@ -26,3 +26,4 @@ PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/appsettings - 
 PhiladelphiaInmateLocator.WebApi/PhiladelphiaInmateLocator.WebApi/appsettings.json
 InmateLocatorFrontEnd/node_modules/
 InmateLocatorFrontEnd/.vs/
+debug.log

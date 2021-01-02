@@ -8,17 +8,6 @@
         <div class="level">
           <div class="level-left">
             <div class="level-item"></div>
-
-            <div class="form-group">
-              <label for="access_token">Token</label>
-              <input
-                type="text"
-                class="form-control"
-                id="access_token"
-                v-model.string="access_token"
-                placeholder="Enter admin token"
-              />
-            </div>
             <div>
               <button type="submit" class="btn btn-primary button">
                 Get All Inmates
@@ -46,7 +35,7 @@ export default {
     search: function() {
       this.api_message = "loading data...";
       this.inmate_details = [];
-      LocatorService.getAuth(`GetAllInmates`, this.access_token)
+      LocatorService.getAuth(`GetAllInmates`)
         .then(response => {
           this.api_message = "";
           this.inmate_details = response.data;

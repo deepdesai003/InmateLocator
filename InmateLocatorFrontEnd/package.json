@@ -17,7 +17,8 @@
     "moment": "^2.29.1",
     "vue": "^2.6.12",
     "vue-bootstrap-datetimepicker": "^5.0.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.6.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.11.0",

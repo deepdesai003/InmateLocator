@@ -18,10 +18,28 @@ import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import Navbar from "@/components/Navbar";
+import { mapState, mapActions } from "vuex";
 //import Search from './Search.vue'
 
 export default {
-  name: "App",
+  name: "app",
+  computed: {
+    ...mapState({
+      alert: state => state.alert
+    })
+  },
+  methods: {
+    ...mapActions({
+      clearAlert: "alert/clear"
+    })
+  },
+  watch: {
+    // eslint-disable-next-line no-unused-vars
+    $route(to, from) {
+      // clear alert on location change
+      this.clearAlert();
+    }
+  },
   components: {
     Navbar
     // Search,

@@ -135,7 +135,7 @@ namespace PhiladelphiaInmateLocator.WebApi.Controllers
         /// <response code="401">Unauthorized Access</response>     
         /// <returns>A list of Inmates</returns>
         [HttpGet("GetAllInmates")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
