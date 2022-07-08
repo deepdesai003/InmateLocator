@@ -14,7 +14,7 @@
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.21.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "vue": "^2.6.12",
     "vue-bootstrap-datetimepicker": "^5.0.1",
     "vue-router": "^3.0.1"
